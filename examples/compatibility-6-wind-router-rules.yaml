@@ -1,0 +1,68 @@
+compatibilities:
+- description: "required cpu vendor"
+  rules:
+  - name: "Intel cpu model"
+    matchFeatures:
+    - feature: cpu.model
+      matchExpressions:
+        vendor_id: {op: In, value: ["Intel"]}
+
+- description: "required kernel confinguration"
+  rules:
+  - name: "kernel config"
+    matchFeatures:
+    - feature: kernel.config
+      matchExpressions:
+        CGROUP_BPF: {op: In, value: ["y"]}
+        XFRM_INTERFACE: {op: In, value: ["y"]}
+        NF_TABLES: {op: In, value: ["y"]}
+        NETFILTER_XT_TARGET_NOTRACK: {op: In, value: ["y"]}
+        NET_ACT_BPF: {op: In, value: ["y"]}
+        MPLS_ROUTING: {op: In, value: ["y"]}
+        MPLS_IPTUNNEL: {op: In, value: ["y"]}
+        PPPOE: {op: In, value: ["y"]}
+    - feature: kernel.loadedmodule
+      matchExpressions:
+        br_netfilter: {op: Exists}
+        ebtables: {op: Exists}
+        ifb: {op: Exists}
+        ip6_tables: {op: Exists}
+        ip_tables: {op: Exists}
+        mpls_iptunnel: {op: Exists}
+        mpls_router: {op: Exists}
+        nf_conntrack: {op: Exists}
+        overlay: {op: Exists}
+        ppp_generic: {op: Exists}
+        vfio-pci: {op: Exists}
+        vhost-net: {op: Exists}
+        vrf: {op: Exists}
+
+- description: "required configuration for GCP ubuntu version"
+  tags: ["ubuntu-gcp-os"]
+  rules:
+  - name: "ubuntu gcp os"
+    matchFeatures:
+    - feature: system.osrelease
+      matchExpressions:
+        ID: {op: In, value: ["ubuntu"]}
+        VERSION_ID: {op: In, value: ["20.04", "22.04"]}
+
+- description: "required configuration for linux mint"
+  tags: ["mint"]
+  rules:
+  - name: "linux mint os config"
+    matchFeatures:
+    - feature: system.osrelease
+      matchExpressions:
+        ID: {op: In, value: ["linuxmint"]}
+        VERSION_ID: {op: In, value: ["21.2", "22.04"]}
+
+- description: "required configuration for RHEL"
+  tags: ["rhel-os"]
+  rules:
+  - name: "rhel os config"
+    matchFeatures:
+    - feature: system.osrelease
+      matchExpressions:
+        ID: {op: In, value: ["rhel"]}
+        VERSION_ID: {op: In, value: ["8"]}

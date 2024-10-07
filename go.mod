@@ -13,6 +13,7 @@ require (
 	github.com/klauspost/cpuid/v2 v2.2.8
 	github.com/onsi/ginkgo/v2 v2.20.2
 	github.com/onsi/gomega v1.34.2
+	github.com/opencontainers/image-spec v1.1.0
 	github.com/opencontainers/runc v1.1.14
 	github.com/prometheus/client_golang v1.18.0
 	github.com/smartystreets/goconvey v1.8.1
@@ -24,6 +25,7 @@ require (
 	golang.org/x/time v0.6.0
 	google.golang.org/grpc v1.63.2
 	google.golang.org/protobuf v1.34.2
+	gopkg.in/yaml.v2 v2.4.0
 	k8s.io/api v0.30.3
 	k8s.io/apiextensions-apiserver v0.30.3
 	k8s.io/apimachinery v0.30.3
@@ -36,6 +38,7 @@ require (
 	k8s.io/kubernetes v1.30.3
 	k8s.io/pod-security-admission v0.30.3
 	k8s.io/utils v0.0.0-20230726121419-3b25d923346b
+	oras.land/oras-go/v2 v2.5.0
 	sigs.k8s.io/node-feature-discovery/api/nfd v0.0.0-00010101000000-000000000000
 	sigs.k8s.io/yaml v1.4.0
 )
@@ -133,7 +136,6 @@ require (
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240227224415-6ceb2ff114de // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	howett.net/plist v1.0.0 // indirect
 	k8s.io/apiserver v0.30.3 // indirect
