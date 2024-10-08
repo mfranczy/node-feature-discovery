@@ -18,7 +18,9 @@ package compat
 
 import (
 	"context"
+	"slices"
 
+	"k8s.io/apimachinery/pkg/util/sets"
 	"oras.land/oras-go/v2/registry"
 
 	"sigs.k8s.io/node-feature-discovery/pkg/apis/nfd/nodefeaturerule"
@@ -41,7 +43,8 @@ type ValidationResult struct {
 	IsValid  bool
 }
 
-func ValidateNode(ctx context.Context, ref *registry.Reference) ([]ValidationResult, error) {
+func ValidateNode(ctx context.Context, ref *registry.Reference, tags sets.Set[string]) ([]ValidationResult, error) {
+
 	spec, err := FetchSpec(ctx, ref)
 	if err != nil {
 		return nil, err
@@ -58,6 +61,15 @@ func ValidateNode(ctx context.Context, ref *registry.Reference) ([]ValidationRes
 
 	results := []ValidationResult{}
 	for _, c := range spec.Compatibilties {
+		if tags.Len() > 0 && len(c.Tags) > 0 {
+			exist := slices.ContainsFunc(c.Tags, func(v string) bool {
+				return tags.Has(v)
+			})
+			if !exist {
+				continue
+			}
+		}
+
 		for _, r := range c.Rules {
 			out, err := nodefeaturerule.Execute(&r, features)
 			if err != nil {

@@ -22,6 +22,7 @@ import (
 	"time"
 
 	"github.com/spf13/cobra"
+	"k8s.io/apimachinery/pkg/util/sets"
 	"oras.land/oras-go/v2/registry"
 
 	pkgcompat "sigs.k8s.io/node-feature-discovery/pkg/client-nfd/compat"
@@ -29,6 +30,7 @@ import (
 
 var (
 	image string
+	tags  []string
 )
 
 // TODO:
@@ -47,7 +49,8 @@ var validateNodeCmd = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		results, err := pkgcompat.ValidateNode(ctx, &ref)
+
+		results, err := pkgcompat.ValidateNode(ctx, &ref, sets.New(tags...))
 		if err != nil {
 			return err
 		}
@@ -69,6 +72,7 @@ var validateNodeCmd = &cobra.Command{
 func init() {
 	CompatCmd.AddCommand(validateNodeCmd)
 	validateNodeCmd.Flags().StringVar(&image, "image", "", "URL of image with compatibility metadata")
+	validateNodeCmd.Flags().StringSliceVar(&tags, "tags", []string{}, "Execute rules with specific tags")
 	if err := validateNodeCmd.MarkFlagRequired("image"); err != nil {
 		panic(err)
 	}
